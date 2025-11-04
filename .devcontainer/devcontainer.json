@@ -1,8 +1,9 @@
 {
   "name": "Ubuntu22 Java17 DevContainer",
-  "build": {
-    "dockerfile": "Dockerfile"
-  },
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/demo",
+
   "customizations": {
     "vscode": {
       "extensions": [
@@ -25,7 +26,11 @@
   },
   "remoteUser": "root",
 
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "app",
-  "workspaceFolder": "/workspaces/demo"
+  // コンテナの再ビルド動作など
+  "postCreateCommand": "mvn -v && java -version",
+
+  // ファイルの自動マウント設定
+  "mounts": [
+    "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+  ]
 }
